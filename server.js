@@ -18,7 +18,25 @@ app.use(express.urlencoded({extended:true}));
 app.get('/', (request, response) => {
   //do something ejs-ey
   response.render('pages/index');
-})
+
+});
+
+function Book(info){
+  this.title = info.title||'THIS BOOK HAS BEEN STRIPPED OF ITS TITLE!';//add ternary ops
+  this.author = info.author||'IT SEEMS THIS BOOK HAS BEEN DEVINELY AUTHORD BY A DIVINITY WHOM SHALL NOT BE NAMED...NO AUTHOR ON RECORED';
+  this.discription = info.discription||'READ THE BOOK AND WRITE ONE!';
+};
+
+
+app.post('/search', (request,response)=>{
+  let url = `https://www.googleapis.com/books/v1/volumes?q=`;
+  if(request.body.search[1]=== 'author') {url += `inauthor:${request.body.search[0]}`}
+  if(request.body.search[1]=== 'title'){url+= `intitle:${request.body.search[0]}`}
+  superagent.get(url)
+    .then(apiResponse=> apiResponse.body.items.map(bookResult=> new Book(bookResult.volumeInfo)));
+    .then(results=> response.render('pages/results'))
+
+});
 
 
 
