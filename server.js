@@ -27,21 +27,25 @@ function Book(info){
 
   this.title = info.title ? info.title : 'THIS BOOK HAS BEEN STRIPPED OF ITS TITLE!';//add ternary ops
   this.author = info.author ? info.author : 'IT SEEMS THIS BOOK HAS BEEN DEVINELY AUTHORD BY A DIVINITY WHOM SHALL NOT BE NAMED...NO AUTHOR ON RECORED';
-  this.isbn = info.isbn ? info.isbn : `PLEASE CONSULT YOUR MAJIC 8BALL FOR THIS INFORMATION`;
-  this.image_url = info.url
+  this.isbn = info.industryIdentifiers ? info.industryIdentifiers[0].identifier : `PLEASE CONSULT YOUR MAJIC 8BALL FOR THIS INFORMATION`;
+  this.image_url = info.url ? info.url : `CHOOSE A ROUTE, ANY ROUTE.... CAUSE WE DONT KNOW WHERE THIS IS EITHER`;
   this.discription = info.discription ? info.description : 'READ THE BOOK AND WRITE ONE!';
-  this.id = info.industry
+  this.id = info = info.industryIdentifiers ? info.industryIdentifiers[0].identifier : '';
+  this.bookshelf;
 }
 
 
 app.post('/search', (request,response)=>{
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
-  if(request.body.search[1]=== 'author') {url += `inauthor:${request.body.search[0]}`;}
-  if(request.body.search[1]=== 'title'){url+= `intitle:${request.body.search[0]}`;}
-  
+  if(request.body.search[1]=== 'author')
+  {url += `inauthor:${request.body.search[0]}`;}
+  if(request.body.search[1]=== 'title')
+  {url+= `intitle:${request.body.search[0]}`;}
+
+
   superagent.get(url)
     .then(apiResponse=> apiResponse.body.items.map(bookResult=> new Book(bookResult.volumeInfo)))
-    .then(results=> response.render('pages/results/show', {searchresults: results}))//does this need to be response?
+    .then(results=> response.render('pages/searches/show', {searchresults: results}))
     .catch(error => handleError(error,response));
 
 });
