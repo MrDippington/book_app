@@ -7,12 +7,12 @@
 </head>
 <body>
   <% searchresults.forEach(item => { %>
-    <p>Book Title: <% = item.title %></p>
-    <p>Book Author: <% = item.author %></p>
-    <p>Book ISBN: <% = item.isbn %></p>
-    <p>Book Author: <% = item.author %></p>
-    <p><img src="<% = item.url %>" alt="book image">: </p>
-    <p>Book Description: <% = item.description %></p>
+    <p>Book Title: <%= item.title %></p>
+    <p>Book Author: <%= item.author %></p>
+    <p>Book ISBN: <%= item.isbn %></p>
+    <p>Book Author: <%= item.author %></p>
+    <p><img src="<%= item.url %>" alt="book image"></p>
+    <p>Book Description: <%= item.description %></p>
   <% }) %>
   
 </body>
