@@ -7,7 +7,7 @@ const cors = require('cors');
 const app = express();
 const superagent = require('superagent');
 const PORT = process.env.PORT || 3000;
-const pg = require('pg');
+// const pg = require('pg');
 
 app.use(cors());
 app.set('view engine', 'ejs');
