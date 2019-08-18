@@ -30,7 +30,7 @@ function Book(info){
   let httpRegex = /^(http:\/\/)/g;
 
   this.title = info.title ? info.title : 'THIS BOOK HAS BEEN STRIPPED OF ITS TITLE!';//add ternary ops
-  this.author = info.author ? info.author : 'IT SEEMS THIS BOOK HAS BEEN DEVINELY AUTHORD BY A DIVINITY WHOM SHALL NOT BE NAMED...NO AUTHOR ON RECORED';
+  this.author = info.authors ? info.authors : 'IT SEEMS THIS BOOK HAS BEEN DEVINELY AUTHORD BY A DIVINITY WHOM SHALL NOT BE NAMED...NO AUTHOR ON RECORED';
   this.isbn = info.industryIdentifiers ? info.industryIdentifiers[0].identifier : `PLEASE CONSULT YOUR MAJIC 8BALL FOR THIS INFORMATION`;
   this.image_url = info.url ? info.url : `CHOOSE A ROUTE, ANY ROUTE.... CAUSE WE DONT KNOW WHERE THIS IS EITHER`;
   this.discription = info.discription ? info.description : 'READ THE BOOK AND WRITE ONE!';
