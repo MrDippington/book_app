@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS books (
 id SERIAL PRIMARY KEY,
 title  VARCHAR(255), 
 author VARCHAR(255), 
-isbn NUMERIC(10,7), 
+isbn NUMERIC, 
 image_url VARCHAR(255),
 description TEXT,
 bookshelf VARCHAR(255)
