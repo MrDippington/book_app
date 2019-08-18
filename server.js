@@ -1,6 +1,6 @@
 'use strict';
 
-require("dotenv").config();
+require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
@@ -52,19 +52,18 @@ function Book(info){
 }
 
 app.get('/search', (request,response) => {
-  console.log('saturday')
+  console.log('saturday');
   let sql = 'SELECT * FROM books;';
   return client.query(sql)
     .then(res => {
-      console.log('res', res.rows)
+      console.log('res', res.rows);
       if(res.rowCount > 0) {
-        let books = res.rows;
-        console.log(books)
-        response.send(books);
-      } 
-      })
-      .catch(error => handleError(error,response));
+        response.render('./pages/show', { showTodo: res.rows });
+        response.render('./pages/books/show',{books: res.rows});
+      }
     })
+    .catch(error => handleError(error,response));
+});
 
 
 app.post('/search', (request,response)=>{
