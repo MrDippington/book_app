@@ -1,6 +1,6 @@
 'use strict';
 
-// require("dotenv").config();
+require("dotenv").config();
 
 const express = require('express');
 const cors = require('cors');
@@ -23,10 +23,11 @@ app.get('/', (request, response) => {
   //do something ejs-ey
   response.render('pages/index');
 });
-app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
+// app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
 
 function getBooks(request, response) {
-  let sql = 'SELECT * FROM books';
+  let sql = 'SELECT * FROM books;';
+  console.log(sql);
   return client.query(sql)
     .then(res => {
       if(res.rowCount > 0) {
@@ -50,6 +51,20 @@ function Book(info){
   this.bookshelf;
 }
 
+app.get('/search', (request,response) => {
+  console.log('saturday')
+  let sql = 'SELECT * FROM books;';
+  return client.query(sql)
+    .then(res => {
+      console.log('res', res.rows)
+      if(res.rowCount > 0) {
+        let books = res.rows;
+        console.log(books)
+        response.send(books);
+      } 
+      })
+      .catch(error => handleError(error,response));
+    })
 
 app.post('/search', (request,response)=>{
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;

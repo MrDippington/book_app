@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS id, title, author, isbn, image_url, description;
+DROP TABLE IF EXISTS books;
 
 CREATE TABLE IF NOT EXISTS books (
 id SERIAL PRIMARY KEY,
-title  VARCHAR(255), 
+title VARCHAR(255), 
 author VARCHAR(255), 
 isbn NUMERIC, 
 image_url VARCHAR(255),
