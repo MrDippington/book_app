@@ -25,6 +25,18 @@ app.get('/', (request, response) => {
 });
 app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
 
+function getBooks(request, response) {
+  let sql = 'SELECT * FROM books';
+  return client.query(sql)
+    .then(res => {
+      if(res.rowCount > 0) {
+        console.log('res', res.rows);
+        response.render('pages/books/show', {previousbooks: res.rows});
+      }
+    })
+    .catch(error => handleError(error,response));
+}
+
 function Book(info){
   const placeHolderImage = 'http://imigur.com/J5LVHEL.JPG';
   let httpRegex = /^(http:\/\/)/g;
