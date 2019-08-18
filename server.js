@@ -7,12 +7,16 @@ const cors = require('cors');
 const app = express();
 const superagent = require('superagent');
 const PORT = process.env.PORT || 3000;
-// const pg = require('pg');
+const pg = require('pg');
 
 app.use(cors());
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended:true}));
+
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.error(err));
 
 //routes
 app.get('/', (request, response) => {
