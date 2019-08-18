@@ -1,6 +1,6 @@
 'use strict';
 
-// require("dotenv").config();
+require("dotenv").config();
 
 const express = require('express');
 const cors = require('cors');
@@ -51,7 +51,10 @@ function Book(info){
 }
 
 
+
 app.post('/search', (request,response)=>{
+  //call get books is rows < 0
+
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
   if(request.body.search[1]=== 'author')
   {url += `inauthor:${request.body.search[0]}`;}
