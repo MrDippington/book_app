@@ -58,7 +58,6 @@ app.get('/search', (request,response) => {
     .then(res => {
       console.log('res', res.rows);
       if(res.rowCount > 0) {
-        response.render('./pages/show', { showTodo: res.rows });
         response.render('./pages/books/show',{books: res.rows});
       }
     })
