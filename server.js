@@ -66,7 +66,10 @@ app.get('/search', (request,response) => {
       .catch(error => handleError(error,response));
     })
 
+
 app.post('/search', (request,response)=>{
+  //call get books is rows < 0
+
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
   if(request.body.search[1]=== 'author')
   {url += `inauthor:${request.body.search[0]}`;}
