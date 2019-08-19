@@ -1,0 +1,22 @@
+<!-- Shows details of a book selected from the show all books page -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Results</title>
+</head>
+<header>
+    <%- include('../layouts/header') %>
+</header>
+<body>
+  <% books.forEach(item => { %>
+    <p><img src="<%= item.url %>" alt="book image"></p>
+    <p>Book Title: <%= item.title %></p>
+    <p>Book Author: <%= item.author %></p>
+    <p>Book ISBN: <%= item.isbn %></p>
+    <p>Book Description: <%= item.description %></p>
+  <% }) %>
+  
+</body>
+</html>

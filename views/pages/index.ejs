@@ -1,25 +1,24 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Book App</title>
 
-    <link rel="stylesheet/css" href="../../public/styles/base.css">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  </head>
-  <body>  
-      <form action="/search" method="post">
-        <input type="text" placeholder="Enter a title or author" name="search" required>
-        <br>
-        <label>Author
-            <input type="radio" name="search" value="author">
-        </label>    
-        <label>Title
-            <input type="radio" name="search" value="title">
-        </label>
-        <button>Submit</button>
-        
-    </form>
-    
-  </body>
+<!-- for showing db books -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Results</title>
+</head>
+<header>
+    <%- include('../layout/header.ejs') %>
+</header>
+<body>
+    <p>Total Books in Database: <%= books.length %></p>
+  <% books.forEach(item => { %>
+    <p><img src="<%= item.url %>" alt="book image"></p>
+    <p>Book Title: <%= item.title %></p>
+    <p>Book Author: <%= item.author %></p>
+    <p><button>View Details</button></p>
+    <p>Book Description: <%= item.description %></p>
+  <% }) %>
+  
+</body>
 </html>
-

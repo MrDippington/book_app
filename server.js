@@ -18,25 +18,59 @@ const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.error(err));
 
-//routes
-app.get('/', (request, response) => {
-  //do something ejs-ey
-  response.render('pages/index');
-});
-// app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
+//=================================routes=================================//
 
-function getBooks(request, response) {
+//Home route :Shows all books in DB on one page
+
+app.get('/', (request, response) => {
   let sql = 'SELECT * FROM books;';
-  console.log(sql);
   return client.query(sql)
     .then(res => {
       if(res.rowCount > 0) {
-        console.log('res', res.rows);
-        response.render('pages/books/show', {previousbooks: res.rows});
+        response.render('./pages/index',{books: res.rows});
       }
     })
     .catch(error => handleError(error,response));
+});
+
+app.get('/books/:id', (request,response)=>{
+  
+});
+
+//=========Search route: Allows users to search Google for new books!=====//
+
+app.get('/search', (request, response) => {
+  //do something ejs-ey
+  response.render(`./views/pages/serches/new.ejs`);
+});
+app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
+
+//====================function to get books from DB==================//
+// function getBooks(request, response) {
+//   let sql = 'SELECT * FROM books;';
+//   console.log(sql);
+//   return client.query(sql)
+//     .then(res => {
+//       if(res.rowCount > 0) {
+//         console.log('res', res.rows);
+//         response.render('pages/books/show', {previousbooks: res.rows});
+//       }
+//     })
+//     .catch(error => handleError(error,response));
+// }
+
+//======================Manual Book Entry========================//
+//code that inserts books from a form . need  to except data and insert into the sql database. 
+function manuelPostNewBookToSQL(){
+  let sql= 'SELECT * FROM books;';
+  //need to post data from book 
 }
+
+
+
+
+
+
 
 function Book(info){
   const placeHolderImage = 'http://imigur.com/J5LVHEL.JPG';
@@ -45,24 +79,15 @@ function Book(info){
   this.title = info.title ? info.title : 'THIS BOOK HAS BEEN STRIPPED OF ITS TITLE!';//add ternary ops
   this.author = info.authors ? info.authors : 'IT SEEMS THIS BOOK HAS BEEN DEVINELY AUTHORD BY A DIVINITY WHOM SHALL NOT BE NAMED...NO AUTHOR ON RECORED';
   this.isbn = info.industryIdentifiers ? info.industryIdentifiers[0].identifier : `PLEASE CONSULT YOUR MAJIC 8BALL FOR THIS INFORMATION`;
-  this.image_url = info.url ? info.url : `CHOOSE A ROUTE, ANY ROUTE.... CAUSE WE DONT KNOW WHERE THIS IS EITHER`;
+  this.image_url = info.url ? info.url : placeHolderImage;
+
   this.discription = info.discription ? info.description : 'READ THE BOOK AND WRITE ONE!';
   this.id = info = info.industryIdentifiers ? info.industryIdentifiers[0].identifier : '';
   this.bookshelf;
 }
 
-app.get('/search', (request,response) => {
-  console.log('saturday');
-  let sql = 'SELECT * FROM books;';
-  return client.query(sql)
-    .then(res => {
-      console.log('res', res.rows);
-      if(res.rowCount > 0) {
-        response.render('./pages/books/show',{books: res.rows});
-      }
-    })
-    .catch(error => handleError(error,response));
-});
+
+
 
 
 app.post('/search', (request,response)=>{
