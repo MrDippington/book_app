@@ -1,5 +1,3 @@
-
-<!-- for showing db books -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,13 +5,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Results</title>
 </head>
+<header>
+    <%- include('../../layout/header.ejs') %>
+</header>
 <body>
-  <% books.forEach(item => { %>
-    <p>Book Title: <%= item.title %></p>
-    <p>Book Author: <%= item.author %></p>
-    <p>Book ISBN: <%= item.isbn %></p>
-    <p>Book Author: <%= item.author %></p>
-    <p><img src="<%= item.url %>" alt="book image"></p>
+        <% books.forEach(item => { %>
+          <p><%= console.log({item}) %></p>
+          <%- include('./detail.ejs', {item: item})%>
+    </form>
     <p>Book Description: <%= item.description %></p>
   <% }) %>
   
