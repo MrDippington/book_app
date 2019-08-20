@@ -13,13 +13,9 @@
 <body>
     <p>Total Books in Database: <%= books.length %></p>
         <% books.forEach(item => { %>
-          <!-- create a button with an a href 
-          include details fom details page and display only title author -->
-
-    <p><img src="<%= item.image_url %>" alt="book image" width="30%"></p>
-    <p>Book Title: <%= item.title %></p>
-    <p>Book Author: <%= item.author %></p>
-    <p><a href=" /book/<%= item.id %>" >View Details</a></p>
+          <p><%= console.log({item}) %></p>
+          <%- include('books/detail', {item: item})%>
+    <p><a href=" /books/<%= item.id %>" >View Details</a></p>
     </form>
     <p>Book Description: <%= item.description %></p>
   <% }) %>

@@ -53,7 +53,7 @@ app.get('/search', (request, response) => {
 
 
 //================================      Details Route       =====================//
-app.get('/book/:id', getBookDetails);
+app.get('/books/:id', getBookDetails);
 
 
 //===============================================================================//
@@ -121,9 +121,16 @@ app.post('/details', (request,response) =>{
 
 //======================================== Get details of specific book ====================
 function getBookDetails(request,response){
-  
-  console.log(request,'llllllllaaaaaaaaammmmmmmaaaaaaa!!!!');
-  // let id = request.params.id ? request.params.id : parseInt(request.body.bananas);
+  let sql = `SELECT * FROM books WHERE id=$1;`;
+  let val = [request.params.id];
+  console.log(request.params.id, 'sub atomic');
+  return client.query(sql,val)
+    .then(res => {
+      if(res.rowCount > 0) {
+        response.render('./pages/books/show',{books: res.rows});
+      }
+    })
+    .catch(error => handleError(error,response));
 }
 
 
@@ -140,12 +147,9 @@ function Book(info){
   this.image_url = info.url ? info.url : placeHolderImage;
 
   this.discription = info.discription ? info.description : 'READ THE BOOK AND WRITE ONE!';
-  this.id = info = info.industryIdentifiers ? info.industryIdentifiers[0].identifier : '';
-  this.bookshelf;
+  this.id = info.industryIdentifiers ? info.industryIdentifiers[0].identifier : '';
+  this.bookshelf = 'unassigned';
 }
-
-
-
 
 
 function handleError(error,response){
@@ -160,4 +164,3 @@ function handleError(error,response){
 
 
 app.listen(PORT, () => console.log(`server up on ${PORT}`));
-
