@@ -18,10 +18,14 @@ const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.error(err));
 
+
+
+//=========================================================================//
 //=================================routes=================================//
 
-//Home route :Shows all books in DB on one page
 
+
+//Home route :Shows all books in DB on one page
 app.get('/', (request, response) => {
   let sql = 'SELECT * FROM books;';
   return client.query(sql)
@@ -33,19 +37,60 @@ app.get('/', (request, response) => {
     .catch(error => handleError(error,response));
 });
 
-app.get('/books/:id', (request,response)=>{
-  
-});
+
+
 
 //=========Search route: Allows users to search Google for new books!=====//
-
 app.get('/search', (request, response) => {
   //do something ejs-ey
-  response.render(`./views/pages/serches/new.ejs`);
+  response.render(`./pages/searches/new.ejs`);
 });
-app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
 
-//====================function to get books from DB==================//
+
+//==================================  Catches any unhandled gets  =================//
+// app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
+
+
+
+//================================      Details Route       =====================//
+app.get('/book/:id', getBookDetails);
+
+
+//===============================================================================//
+//===============================Posts===========================================//
+
+//takes in values from the search field, gets results form google and creates the new book instances array
+app.post('/search', (request,response)=>{
+  // console.log(request);
+  let url = `https://www.googleapis.com/books/v1/volumes?q=`;
+  if(request.body.search[1]=== 'author')
+  {url += `inauthor:${request.body.search[0]}`;}
+  if(request.body.search[1]=== 'title')
+  {url+= `intitle:${request.body.search[0]}`;}
+
+  superagent.get(url)
+    .then(apiResponse=> apiResponse.body.items.map(bookResult=> new Book(bookResult.volumeInfo)))
+    .then(results=> response.render('pages/searches/show', {searchresults: results}))
+    .catch(error => handleError(error,response));
+});
+
+app.post('/details', (request,response) =>{
+  let sql = 'SELECT * FROM books;';
+  console.log(request);
+  return client.query(sql)
+    .then(res => {
+      if(res.rowCount > 0) {
+        response.render('./pages/index',{books: res.rows});
+      }
+    })
+    .catch(error => handleError(error,response));
+});
+
+
+
+
+
+// //====================function to get books from DB==================//
 // function getBooks(request, response) {
 //   let sql = 'SELECT * FROM books;';
 //   console.log(sql);
@@ -59,24 +104,37 @@ app.get('*', (request, response) => response.status(404).send(`This page does no
 //     .catch(error => handleError(error,response));
 // }
 
+
+
+
+
+
 //======================Manual Book Entry========================//
-//code that inserts books from a form . need  to except data and insert into the sql database. 
-function manuelPostNewBookToSQL(){
-  let sql= 'SELECT * FROM books;';
-  //need to post data from book 
+//code that inserts books from a form . need  to except data and insert into the sql database.
+// function manuelPostNewBookToSQL(){
+//   let sql= 'SELECT * FROM books;';
+//   //need to post data from book
+// }
+
+
+
+
+//======================================== Get details of specific book ====================
+function getBookDetails(request,response){
+  
+  console.log(request,'llllllllaaaaaaaaammmmmmmaaaaaaa!!!!');
+  // let id = request.params.id ? request.params.id : parseInt(request.body.bananas);
 }
 
 
 
 
-
-
-
+//=====================================    Constructor ================================//
 function Book(info){
   const placeHolderImage = 'http://imigur.com/J5LVHEL.JPG';
   let httpRegex = /^(http:\/\/)/g;
 
-  this.title = info.title ? info.title : 'THIS BOOK HAS BEEN STRIPPED OF ITS TITLE!';//add ternary ops
+  this.title = info.title ? info.title : 'THIS BOOK HAS BEEN STRIPPED OF ITS TITLE!';
   this.author = info.authors ? info.authors : 'IT SEEMS THIS BOOK HAS BEEN DEVINELY AUTHORD BY A DIVINITY WHOM SHALL NOT BE NAMED...NO AUTHOR ON RECORED';
   this.isbn = info.industryIdentifiers ? info.industryIdentifiers[0].identifier : `PLEASE CONSULT YOUR MAJIC 8BALL FOR THIS INFORMATION`;
   this.image_url = info.url ? info.url : placeHolderImage;
@@ -89,23 +147,6 @@ function Book(info){
 
 
 
-
-app.post('/search', (request,response)=>{
-  //call get books is rows < 0
-
-  let url = `https://www.googleapis.com/books/v1/volumes?q=`;
-  if(request.body.search[1]=== 'author')
-  {url += `inauthor:${request.body.search[0]}`;}
-  if(request.body.search[1]=== 'title')
-  {url+= `intitle:${request.body.search[0]}`;}
-
-
-  superagent.get(url)
-    .then(apiResponse=> apiResponse.body.items.map(bookResult=> new Book(bookResult.volumeInfo)))
-    .then(results=> response.render('pages/searches/show', {searchresults: results}))
-    .catch(error => handleError(error,response));
-
-});
 
 function handleError(error,response){
   console.error(error);

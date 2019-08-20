@@ -12,11 +12,15 @@
 </header>
 <body>
     <p>Total Books in Database: <%= books.length %></p>
-  <% books.forEach(item => { %>
-    <p><img src="<%= item.url %>" alt="book image"></p>
+        <% books.forEach(item => { %>
+          <!-- create a button with an a href 
+          include details fom details page and display only title author -->
+
+    <p><img src="<%= item.image_url %>" alt="book image" width="30%"></p>
     <p>Book Title: <%= item.title %></p>
     <p>Book Author: <%= item.author %></p>
-    <p><button>View Details</button></p>
+    <p><a href=" /book/<%= item.id %>" >View Details</a></p>
+    </form>
     <p>Book Description: <%= item.description %></p>
   <% }) %>
   
