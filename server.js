@@ -23,10 +23,46 @@ client.on('error', err => console.error(err));
 //=========================================================================//
 //=================================routes=================================//
 
-
-
 //Home route :Shows all books in DB on one page
-app.get('/', (request, response) => {
+app.get('/', showAll);
+
+//Search route: Allows users to search Google for new books!
+app.get('/search', (request, response) => response.render(`./pages/searches/new.ejs`));
+
+//Catches any unhandled gets
+app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
+
+//Details Route: shows a page of book detail for single selected book
+app.get('/books/:id', getBookDetails);
+
+
+
+
+
+
+
+
+//===============================================================================//
+//===========================    Post Routes   ==================================//
+
+//takes in values from the search field, gets results form google and creates the new book instances array
+app.post('/search', getFromGoogle);
+//takes in values from a book selected from the search and sends to DB
+app.post('/books', addToDB);
+
+
+
+
+
+
+
+
+//===============================================================================//
+//==============================   Functions   ==================================//
+
+
+//=============       Shows all books in DB on home page        ================//
+function showAll(request, response){
   let sql = 'SELECT * FROM books;';
   return client.query(sql)
     .then(res => {
@@ -35,91 +71,45 @@ app.get('/', (request, response) => {
       }
     })
     .catch(error => handleError(error,response));
-});
+}
 
 
 
 
-//=========Search route: Allows users to search Google for new books!=====//
-app.get('/search', (request, response) => {
-  //do something ejs-ey
-  response.render(`./pages/searches/new.ejs`);
-});
-
-
-//==================================  Catches any unhandled gets  =================//
-// app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
-
-
-
-//================================      Details Route       =====================//
-app.get('/books/:id', getBookDetails);
-
-
-//===============================================================================//
-//===============================Posts===========================================//
-
-//takes in values from the search field, gets results form google and creates the new book instances array
-app.post('/search', (request,response)=>{
-  // console.log(request);
+//=================   gets search results form GooglyBoogly   ==================//
+function getFromGoogle(request,response){
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
   if(request.body.search[1]=== 'author')
   {url += `inauthor:${request.body.search[0]}`;}
   if(request.body.search[1]=== 'title')
   {url+= `intitle:${request.body.search[0]}`;}
-
   superagent.get(url)
     .then(apiResponse=> apiResponse.body.items.map(bookResult=> new Book(bookResult.volumeInfo)))
     .then(results=> response.render('pages/searches/show', {searchresults: results}))
     .catch(error => handleError(error,response));
-});
+}
 
-app.post('/details', (request,response) =>{
-  let sql = 'SELECT * FROM books;';
-  console.log(request);
-  return client.query(sql)
-    .then(res => {
+
+
+
+//===============   adds a selected book form the search tothe DB   =================\\
+function addToDB(request,response){
+  let sql ='INSERT INTO books(title, author, isbn, image_url, description, bookshelf) VALUES($1, $2, $3, $4, $5, $6) RETURNING id;';
+  let values = [request.body.title, request.body.author, request.body.isbn, request.body.image_url, request.body.description, request.body.bookshelf];
+  console.log(values);
+  return client.query(sql, values)
+    .then(res=>{
       if(res.rowCount > 0) {
-        response.render('./pages/index',{books: res.rows});
+        return response.redirect(`/books/${res.rows[0].id}`);
       }
     })
     .catch(error => handleError(error,response));
-});
+}
 
 
 
 
-
-// //====================function to get books from DB==================//
-// function getBooks(request, response) {
-//   let sql = 'SELECT * FROM books;';
-//   console.log(sql);
-//   return client.query(sql)
-//     .then(res => {
-//       if(res.rowCount > 0) {
-//         console.log('res', res.rows);
-//         response.render('pages/books/show', {previousbooks: res.rows});
-//       }
-//     })
-//     .catch(error => handleError(error,response));
-// }
-
-
-
-
-
-
-//======================Manual Book Entry========================//
-//code that inserts books from a form . need  to except data and insert into the sql database.
-// function manuelPostNewBookToSQL(){
-//   let sql= 'SELECT * FROM books;';
-//   //need to post data from book
-// }
-
-
-
-
-//======================================== Get details of specific book ====================
+//============================       Get details of specific book         ====================//
 function getBookDetails(request,response){
   let sql = `SELECT * FROM books WHERE id=$1;`;
   let val = [request.params.id];
@@ -131,6 +121,17 @@ function getBookDetails(request,response){
       }
     })
     .catch(error => handleError(error,response));
+}
+
+
+
+
+//===========================        Handle Error      ====================================//
+function handleError(error,response){
+  console.error(error);
+  if(response){
+    response.status(500).send('GREAT SCOTT ITS BEEN NUKED!');
+  }
 }
 
 
@@ -152,15 +153,10 @@ function Book(info){
 }
 
 
-function handleError(error,response){
-  console.error(error);
-  if(response){
-    response.status(500).send('GREAT SCOTT ITS BEEN NUKED!');
-  }
-}
-
-
-
-
 
 app.listen(PORT, () => console.log(`server up on ${PORT}`));
+
+
+
+
+

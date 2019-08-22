@@ -18,14 +18,13 @@
                 <li>
                     <button class="select">Select this book</button> 
                     <form  class="hide-me" action="/books" method="POST">
-                        <input type="text" name="Title" value="<%= item.title%>" required>
-                        <input type="text" name="Author" value="<%= item.author %>" required>
-                        <input type="text" name="ISBN" value="<%= item.isbn %>">
-                        <input type="text" name="Desription" value="<%= item.description %>">
-                        <input type="text" name="Image URL" value="<%= item.image_url %>">
-                        <textarea type="text" name="Desription" value="<%= item.description %>" cols="30" rows="5"><%= item.description %></textarea>
+                        <input type="text" name="title" value="<%= item.title%>" required>
+                        <input type="text" name="author" value="<%= item.author %>" required>
+                        <input type="text" name="isbn" value="<%= item.isbn %>">
+                        <input type="text" name="image_url" value="<%= item.image_url %>">
+                        <textarea type="text" name="description" value="<%= item.description %>" cols="30" rows="5"><%= item.description %></textarea>
                         <p>Enter a bookshelf</p>
-                        <input type="text" name="Bookshelf" required>
+                        <input type="text" name="bookshelf" required>
                         <button type="submit" class=".subToDB">Add to Bookshelf</button>
                     </form>
                 </li>
