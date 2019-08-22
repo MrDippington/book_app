@@ -1,0 +1,44 @@
+nav {
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+}
+
+section {
+  width: 90%;
+  margin: 20px auto 50px auto;
+  padding: 20px 0;
+}
+
+h1,
+h2 {
+  margin: 10px 0;
+}
+
+li {
+  padding: 5px 30px;
+}
+
+img {
+  margin: 10px auto;
+  width: 50%;
+  display: block;
+}
+
+form {
+  padding: 20px;
+}
+
+input {
+  margin: 0 10px;
+}
+
+p,
+a {
+  margin: 8px auto;
+}

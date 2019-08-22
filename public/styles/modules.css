@@ -1,0 +1,41 @@
+nav {
+  background-color: rgb(49, 49, 49);
+}
+
+nav>a {
+  font-size: 1.5em;
+  color: whitesmoke;
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+a {
+  color: rgb(49, 49, 49);
+}
+
+p,
+a,
+form {
+  font-size: 1.3em;
+}
+
+section {
+  border: 5px solid rgb(77, 77, 77);
+}
+
+img {
+  padding: 5px;
+  border: 5px solid rgb(167, 167, 167);
+}

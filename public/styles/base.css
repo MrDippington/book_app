@@ -4,3 +4,12 @@
 .hide-me{
     display: none;
 }
+
+body {
+    box-sizing: border-box;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-flow: column wrap;
+    padding-top: 60px;
+}
