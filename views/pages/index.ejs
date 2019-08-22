@@ -4,12 +4,10 @@
 
     <%- include('../layout/head.ejs') %>
 
-
 <body>
     
         <%- include('../layout/header.ejs') %>
-    
-    
+        
     <p>Total Books in Database: <%= books.length %></p>
         <% books.forEach(item => { %>
           <p><%= console.log({item: item.author}) %></p>
