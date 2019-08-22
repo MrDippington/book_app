@@ -2,30 +2,38 @@
 
 <html lang="en">
 
+
     <%- include('../../layout/head.ejs') %>
 
 <body>
 
     <%- include('../../layout/header.ejs') %>
 
-        
+
+        <main>
+            <ul>
         <% searchresults.forEach(item => { %>
             <%- include('../books/detail.ejs', {item: item})%> 
-            <button class="select">Select this book</button> 
-            
-          <form  class="hide-me" action="/books" method="POST">
-            
-            <input type="text" name="Title" value="<%= item.title%>" required>
-            <input type="text" name="Author" value="<%= item.author %>" required>
-            <input type="text" name="ISBN" value="<%= item.isbn %>">
-            <input type="text" name="Desription" value="<%= item.description %>">
-            <input type="text" name="Image URL" value="<%= item.image_url %>">
-            <textarea type="text" name="Desription" value="<%= item.description %>" cols="30" rows="5"><%= item.description %></textarea>
-            <p>Enter a bookshelf</p>
-            <input type="text" name="Bookshelf" required>
-            <% }) %>
-          </form>
-        
+
+                <li>
+                    <button class="select">Select this book</button> 
+                    <form  class="hide-me" action="/books" method="POST">
+                        <input type="text" name="Title" value="<%= item.title%>" required>
+                        <input type="text" name="Author" value="<%= item.author %>" required>
+                        <input type="text" name="ISBN" value="<%= item.isbn %>">
+                        <input type="text" name="Desription" value="<%= item.description %>">
+                        <input type="text" name="Image URL" value="<%= item.image_url %>">
+                        <textarea type="text" name="Desription" value="<%= item.description %>" cols="30" rows="5"><%= item.description %></textarea>
+                        <p>Enter a bookshelf</p>
+                        <input type="text" name="Bookshelf" required>
+                        <button type="submit" class=".subToDB">Add to Bookshelf</button>
+                    </form>
+                </li>
+                <% }) %>
+            </ul>
+        </main>
+        <footer>
+
             <%- include('../../layout/footer.ejs') %>
         
     </body>
