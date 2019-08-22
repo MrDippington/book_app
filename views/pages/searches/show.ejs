@@ -2,14 +2,19 @@
 
 <html lang="en">
 
-    <%- include('../../layout/head.ejs') %>>
+
+    <%- include('../../layout/head.ejs') %>
+
 <body>
-        <%- include('../../layout/header.ejs') %>
+
+    <%- include('../../layout/header.ejs') %>
+
 
         <main>
             <ul>
         <% searchresults.forEach(item => { %>
             <%- include('../books/detail.ejs', {item: item})%> 
+
                 <li>
                     <button class="select">Select this book</button> 
                     <form  class="hide-me" action="/books" method="POST">
@@ -28,7 +33,8 @@
             </ul>
         </main>
         <footer>
+
             <%- include('../../layout/footer.ejs') %>
-        </footer>
+        
     </body>
 </html>
