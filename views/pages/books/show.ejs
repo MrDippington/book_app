@@ -1,5 +1,6 @@
 <html lang="en">
 <head>
+    <%- include('../../layout/head.ejs') %>
 </head>
 <body>
     <header>
@@ -9,8 +10,10 @@
         <% books.forEach(item => { %>
           <p><%= console.log({item}) %></p>
           <%- include('./detail.ejs', {item: item})%>
+          <% }) %>
     </form>
-    <p>Book Description: <%= item.description %></p>
-  <% }) %>
+    <footer>
+            <%- include('../layout/footer.ejs') %>
+    </footer>
 </body>
 </html>
