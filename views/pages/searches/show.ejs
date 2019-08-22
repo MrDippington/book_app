@@ -11,19 +11,19 @@
 
         
         <% searchresults.forEach(item => { %>
-            <p><%= console.log({item}) %></p>
             <%- include('../books/detail.ejs', {item: item})%> 
-            <button class=".select">Select this book</button> 
+            <button class="select">Select this book</button> 
             
           <form  class="hide-me" action="/books" method="POST">
-            <input type="hidden" name="Title" value="<%= item.title%>" required>
-            <input type="hidden" name="Author" value="<%= item.author %>" required>
-            <input type="hidden" name="ISBN" value="<%= item.isbn %>">
-            <input type="hidden" name="Desription" value="<%= item.description %>">
-            <input type="hidden" name="Image URL" value="<%= item.image_url %>">
-            <textarea type="hidden" name="Desription" value="<%= item.description %>" cols="30" rows="5"><%= item.description %></textarea>
+            
+            <input type="text" name="Title" value="<%= item.title%>" required>
+            <input type="text" name="Author" value="<%= item.author %>" required>
+            <input type="text" name="ISBN" value="<%= item.isbn %>">
+            <input type="text" name="Desription" value="<%= item.description %>">
+            <input type="text" name="Image URL" value="<%= item.image_url %>">
+            <textarea type="text" name="Desription" value="<%= item.description %>" cols="30" rows="5"><%= item.description %></textarea>
             <p>Enter a bookshelf</p>
-            <input type="hidden" name="Bookshelf" required>
+            <input type="text" name="Bookshelf" required>
             <% }) %>
           </form>
         <footer>
