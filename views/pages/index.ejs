@@ -2,23 +2,22 @@
 <!-- for showing db books -->
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Results</title>
+    <%- include('../layout/head.ejs') %>
 </head>
-<header>
-    <%- include('../layout/header.ejs') %>
-</header>
+
 <body>
+    <header>
+        <%- include('../layout/header.ejs') %>
+    </header>
+    
     <p>Total Books in Database: <%= books.length %></p>
         <% books.forEach(item => { %>
-          <p><%= console.log({item}) %></p>
+          <p><%= console.log({item: item.author}) %></p>
           <%- include('books/detail', {item: item})%>
     <p><a href=" /books/<%= item.id %>" >View Details</a></p>
-    </form>
-    <p>Book Description: <%= item.description %></p>
-  <% }) %>
-  
+     <% }) %>
+<footer>
+    <%- include('../layout/footer.ejs') %>
+</footer>
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <%- include('../layout/head.ejs') %>
+  </head>
+  <body>
+      <header>
+            <%- include('../layout/header.ejs') %>
+      </header>
+
+        
+        <button>Select this book</button>  
+          <form class="hideMe" action="/books" method="POST">
+            <input type="text" name="Title" value="<%= item.title%>" required>
+            <input type="text" name="Author" value="<%= item.author %>" required>
+            <input type="text" name="ISBN" value="<%= item.isbn %>">
+            <input type="text" name="Desription" value="<%= item.description %>">
+            <input type="text" name="Image URL" value="<%= item.image_url %>">
+            <textarea name="Desription" value="<%= item.description %>" cols="30" rows="5"><%= item.description %></textarea>
+            <p>Enter a bookshelf</p>
+            
+            <input type="text" name="Bookshelf" required>
+            <button class="showMe" type="submit">Add to Bookshelf</button>
+
+          </form>
+        <footer>
+            <%- include('../layout/footer.ejs') %>
+        </footer>
+    </body>
+</html>
