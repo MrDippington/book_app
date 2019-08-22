@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head>
+
     <%- include('../../layout/head.ejs') %>
-</head>
+
 <body>
-    <header>
-        <%- include('../../layout/header.ejs') %>
-    </header>
+
+    <%- include('../../layout/header.ejs') %>
 
         
         <% searchresults.forEach(item => { %>
@@ -26,8 +25,8 @@
             <input type="text" name="Bookshelf" required>
             <% }) %>
           </form>
-        <footer>
+        
             <%- include('../../layout/footer.ejs') %>
-        </footer>
+        
     </body>
 </html>

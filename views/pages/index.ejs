@@ -1,14 +1,14 @@
 
 <!-- for showing db books -->
 <html lang="en">
-<head>
+
     <%- include('../layout/head.ejs') %>
-</head>
+
 
 <body>
-    <header>
+    
         <%- include('../layout/header.ejs') %>
-    </header>
+    
     
     <p>Total Books in Database: <%= books.length %></p>
         <% books.forEach(item => { %>
@@ -16,8 +16,8 @@
           <%- include('books/detail', {item: item})%>
     <p><a href=" /books/<%= item.id %>" >View Details</a></p>
      <% }) %>
-<footer>
+
     <%- include('../layout/footer.ejs') %>
-</footer>
+
 </body>
 </html>
