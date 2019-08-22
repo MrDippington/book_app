@@ -1,20 +1,16 @@
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Results</title>
 </head>
-<header>
-    <%- include('../../layout/header.ejs') %>
-</header>
 <body>
+    <header>
+        <%- include('../../layout/header.ejs') %>
+    </header>
+    <form>
         <% books.forEach(item => { %>
           <p><%= console.log({item}) %></p>
           <%- include('./detail.ejs', {item: item})%>
     </form>
     <p>Book Description: <%= item.description %></p>
   <% }) %>
-  
 </body>
 </html>
