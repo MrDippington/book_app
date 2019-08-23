@@ -1,5 +1,6 @@
 nav {
-  background-color: rgb(49, 49, 49);
+  /* background-color: rgb(49, 49, 49); */
+  height: 70px;
 }
 
 nav>a {
@@ -33,9 +34,8 @@ section {
   border: 5px solid rgb(77, 77, 77);
   padding: 20px;
   overflow-wrap: break-word;
+  
 }
-
-sec
 
 img {
   padding: 5px;
