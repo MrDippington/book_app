@@ -8,12 +8,30 @@ const app = express();
 const superagent = require('superagent');
 const PORT = process.env.PORT || 3000;
 const pg = require('pg');
+const methodOverride = require('method-override');
+
 
 app.use(cors());
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride((request, response)=> {
+  if(request.body && typeof request.body === 'object' && '_method' in request.body) {
+    let method = request.body._method;
+    delete request.body._method;
+    return method;
+  }
+}));
 
+// app.use(methodOverride((request, response) => {
+//   //if the request HAS .body, && .body is typeof object, && _method lives in the body
+//   //all three conditions have to be true to run the code.  High level to low level
+//   if(request.body && typeof request.body === 'object' && '_method' in request.body) {
+//       let method = request.body._method;
+//       delete request.body._method;
+//       return method;
+//   }
+// }))
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.error(err));
@@ -52,6 +70,8 @@ app.get('*', (request, response) => response.status(404).send(`This page does no
 app.post('/search', getFromGoogle);
 //takes in values from a book selected from the search and sends to DB
 app.post('/books', addToDB);
+// Updates book details based on user input
+app.post('/books', updateBook);
 
 
 
@@ -112,9 +132,26 @@ function addToDB(request,response){
 
 
 
+//==========================      Update Book details    ==========================//
+function updateBook(request,response){
+  let {title, author, isbn, image_url, description, bookshelf} = request.body;
+  let SQL = 'UPDATE tasks SET title=$1, author=$2, isbn=$3, image_url=$4, description=$5, bookshelf=$6;';
+  let values = [title, author, isbn, image_url, description, bookshelf];
+  client.query(SQL, values)
+    .then(update => {
+      if (update.rowCount > 0) {
+        return response.redirect(`/books/${id}`);
+      }
+    })
+    .catch(err => console.error(err));
+}
+
+
+
+
 //============================       Get details of specific book         ====================//
 function getBookDetails(request,response){
-  console.log('sub atomic')
+  console.log('sub atomic');
   let sql = `SELECT * FROM books WHERE id=$1;`;
   let val = [request.params.id];
   console.log(request.params.id, 'sub atomic');
