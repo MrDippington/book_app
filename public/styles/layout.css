@@ -10,7 +10,7 @@ nav {
 }
 
 section {
-  width: 90%;
+  width: 60%;
   margin: 20px auto 50px auto;
   padding: 20px 0;
 }
@@ -21,12 +21,12 @@ h2 {
 }
 
 li {
-  padding: 5px 30px;
+  padding: 10px 30px;
 }
 
 img {
   margin: 10px auto;
-  width: 50%;
+  width: 40%;
   display: block;
 }
 

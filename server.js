@@ -29,11 +29,14 @@ app.get('/', showAll);
 //Search route: Allows users to search Google for new books!
 app.get('/search', (request, response) => response.render(`./pages/searches/new.ejs`));
 
+//Details Route: shows a page of book detail for single selected book
+app.get('/books/:id', getBookDetails);
+
 //Catches any unhandled gets
 app.get('*', (request, response) => response.status(404).send(`This page does not exist!`));
 
-//Details Route: shows a page of book detail for single selected book
-app.get('/books/:id', getBookDetails);
+
+
 
 
 
@@ -111,6 +114,7 @@ function addToDB(request,response){
 
 //============================       Get details of specific book         ====================//
 function getBookDetails(request,response){
+  console.log('sub atomic')
   let sql = `SELECT * FROM books WHERE id=$1;`;
   let val = [request.params.id];
   console.log(request.params.id, 'sub atomic');

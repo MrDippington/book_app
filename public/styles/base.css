@@ -1,15 +1,24 @@
-* {
+*{
+    width: 100%;
+    text-align: center;
+}
+
+
+/* * {
+ 
   background-color: rgb(110, 238, 247);
   color: #150ba2;
   text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15);
-}
+} */
 .hide-me{
     display: none;
 }
 
 body {
+
     box-sizing: border-box;
     margin: auto;
+    text-overflow: auto;
     text-align: center;
     display: flex;
     flex-flow: column wrap;
