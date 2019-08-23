@@ -8,11 +8,11 @@
     
         <%- include('../layout/header.ejs') %>
         
-    <p>Total Books in Database: <%= books.length %></p>
+    <!-- <p id="total">Total Books in Database: <%= books.length %></p> -->
         <% books.forEach(item => { %>
           <p><%= console.log({item: item.author}) %></p>
           <%- include('books/detail', {item: item})%>
-    <p><a href=" /books/<%= item.id %>" >View Details</a></p>
+    <!-- <p><a href=" /books/<%= item.id %>" >View Details</a></p> -->
      <% }) %>
 
     <%- include('../layout/footer.ejs') %>

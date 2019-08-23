@@ -1,6 +1,8 @@
 *{
-    width: 100%;
+    /* width: 100%; */
     text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    
 }
 
 
@@ -15,7 +17,7 @@
 }
 
 body {
-
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(220,217,249,1) 0%, rgba(172,224,217,1) 89.8% );
     box-sizing: border-box;
     margin: auto;
     text-overflow: auto;
@@ -27,4 +29,11 @@ body {
 
 header {
     display: inline-block;
+}
+
+h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 100%;
+    color: rgba(255, 255, 255, 0.961);
+    text-shadow: 2px 2px 4px #000000;
 }

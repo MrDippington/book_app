@@ -4,9 +4,9 @@ nav {
   top: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
+  /* display: flex; */
+  /* flex-flow: row nowrap; */
+  /* justify-content: space-evenly; */
 }
 
 section {
@@ -21,7 +21,7 @@ h2 {
 }
 
 li {
-  padding: 10px 30px;
+  /* padding: 10px; */
 }
 
 img {
@@ -31,7 +31,7 @@ img {
 }
 
 form {
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 input {
@@ -41,4 +41,13 @@ input {
 p,
 a {
   margin: 8px auto;
+}
+
+#details p {
+  font-size: 15px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+#total {
+  font-family: 'Orbitron', sans-serif;
 }
