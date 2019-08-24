@@ -71,7 +71,7 @@ app.post('/search', getFromGoogle);
 //takes in values from a book selected from the search and sends to DB
 app.post('/books', addToDB);
 // Updates book details based on user input
-app.post('/books', updateBook);
+app.put('/books', updateBook);
 
 
 
@@ -154,7 +154,7 @@ function getBookDetails(request,response){
   console.log('sub atomic');
   let sql = `SELECT * FROM books WHERE id=$1;`;
   let val = [request.params.id];
-  console.log(request.params.id, 'sub atomic');
+  console.log(request.params, 'sub');
   return client.query(sql,val)
     .then(res => {
       if(res.rowCount > 0) {
