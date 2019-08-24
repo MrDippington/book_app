@@ -11,6 +11,10 @@
             <% books.forEach(item => { %>
               <p><%= console.log({item}) %></p>
                 <%- include('./detail.ejs', {item: item})%>
+                <li>   
+                    <button class="select">Update This Book</button> 
+                    <%- include('./edit.ejs',{item: item}) %>
+                </li>        
             <% }) %>
         </ul>
     </main>
